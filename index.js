@@ -8,6 +8,8 @@ try {
   console.log(e); // Or whatever action you want here
 }
 
+
+
 for (let i = 0; i < links.length; i++) {
   let key1 = Math.random() * 100000;
   links[i].key = key1;
@@ -70,6 +72,36 @@ if (leadsFromLocalStorage) {
   render(myLeads);
 }
 
+// rendering all leads
+function render(leads) {
+  let listItems = '';
+  for (let i = 0; i < leads.length; i++) {
+    listItems += `
+            <li>
+                <a target='_blank' href='${leads[i]}'>
+                    ${leads[i]}
+                </a>
+            </li>
+        `;
+  }
+  ulEl.innerHTML = listItems;
+}
+
+// deleting all leads
+deleteBtn.addEventListener('click', function () {
+  localStorage.clear();
+  myLeads = [];
+  render(myLeads);
+});
+
+// input leads
+inputBtn.addEventListener('click', function () {
+  myLeads.push(inputEl.value);
+  inputEl.value = '';
+  localStorage.setItem('myLeads', JSON.stringify(myLeads));
+  render(myLeads);
+});
+
 // social inputs
 
 var inputSocial = document.getElementById('social-inp');
@@ -104,36 +136,6 @@ tabBtn.addEventListener('click', function () {
       render(myLeads);
     }
   );
-});
-
-// rendering all leads
-function render(leads) {
-  let listItems = '';
-  for (let i = 0; i < leads.length; i++) {
-    listItems += `
-            <li>
-                <a target='_blank' href='${leads[i]}'>
-                    ${leads[i]}
-                </a>
-            </li>
-        `;
-  }
-  ulEl.innerHTML = listItems;
-}
-
-// deleting all leads
-deleteBtn.addEventListener('click', function () {
-  localStorage.clear();
-  myLeads = [];
-  render(myLeads);
-});
-
-// input leads
-inputBtn.addEventListener('click', function () {
-  myLeads.push(inputEl.value);
-  inputEl.value = '';
-  localStorage.setItem('myLeads', JSON.stringify(myLeads));
-  render(myLeads);
 });
 
 // social inputs in array
